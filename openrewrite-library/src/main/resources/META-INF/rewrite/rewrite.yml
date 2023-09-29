@@ -1,0 +1,36 @@
+type: specs.openrewrite.org/v1beta/recipe
+name: com.repros.openrewrite
+displayName: Create a rewritten class based on an original
+recipeList:
+  - org.openrewrite.java.ChangePackage:
+      oldPackageName: com.original
+      newPackageName: com.rewritten
+      recursive: true
+
+  - org.openrewrite.RenameFile:
+      fileMatcher: '**/Original.java'
+      fileName: Rewritten.java
+      caseSensitive: true
+
+  - org.openrewrite.RenameFile:
+      fileMatcher: '**/my-original-project.iml'
+      fileName: my-rewritten-project.iml
+      caseSensitive: true
+
+  - org.openrewrite.text.FindAndReplace:
+      find: com.original
+      replace: com.rewritten
+      caseSensitive: true
+      filePattern: '**/*.java;**/*.xml;**/*.md;**/*.properties;**/*.json'
+
+  - org.openrewrite.text.FindAndReplace:
+      find: original
+      replace: rewritten
+      caseSensitive: true
+      filePattern: '**/*.java;**/*.xml;**/*.md'
+
+  - org.openrewrite.text.FindAndReplace:
+      find: Original
+      replace: Rewritten
+      caseSensitive: true
+      filePattern: '**/*.java;**/*.xml;**/*.md'
